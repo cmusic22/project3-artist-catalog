@@ -41,9 +41,9 @@ def addNewArtwork():
 	price = float(input('Enter Price: $'))
 	#popout into seperate function?
 	sold = getSoldInput()
-	#put in query module 
-	addArtworkQuery(artist, artwork, price, sold)
-	#showMenu()
+	#put in query module
+	artworkAddSuccsess = addArtworkQuery(artist, artwork, price, sold)
+	
 	start = True
 	return start
 
@@ -67,13 +67,16 @@ def changeAvailability():
 	return start
 
 def getSoldInput():
-	soldInput = input('Artwork is for sale? T or F').lower()
-
-	if soldInput == 't':
-		sold = bool(soldInput)
-	elif soldInput == 'f':
-		sold = bool('')
-	else:
-		print('Please input T or F')
-		soldInput = input('Artwork is for sale?')
+	ask = True;
+	while ask == True:
+		soldInput = input('Artwork is for sale? T or F').lower()
+		if soldInput == 't':
+			sold = bool(soldInput)
+			ask = False
+		elif soldInput == 'f':
+			sold = bool('')
+			ask = False
+		else:
+			print('Please input T or F')
+			ask = True
 	return sold

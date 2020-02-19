@@ -1,6 +1,7 @@
 import artFunctions
 from artDatabase import Artist
 from artDatabase import Artwork
+from peewee import *
 
 def addArtistQuery(name, email):
 	artistEntry = Artist(name = name, email = email)
@@ -8,19 +9,20 @@ def addArtistQuery(name, email):
 	print('Artist Added!')
 
 def lookUpArtworkByArtist(artistName):
-
 	query = Artwork.select(Artwork).join(Artist).where(Artist.name == artistName)
-	return 	query
+	return 	query	
 
 def artistArtForSale(artistName):
-
 	query = Artwork.select(Artwork).join(Artist).where(Artwork.sold == True).where(Artist.name == artistName)
 	return query
 
 def addArtworkQuery(artist, artwork, price, sold):
-	artworkEntry = Artwork(artist = artist, artwork = artwork, price = price, sold = sold)
-	artworkEntry.save()
-	print('Artwork Added!')
+	try:
+		artworkEntry = Artwork(artist = artist, artwork = artwork, price = price, sold = sold)
+		artworkEntry.save()
+		print('Artwork Added')
+	except:
+		print('Please enter an artist ID that exists')				
 
 def deleteArt(artworkName):
 	deleteQuery = Artwork.delete().where(Artwork.artwork == artworkName)
